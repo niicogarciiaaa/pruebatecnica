@@ -1,0 +1,24 @@
+<div *ngIf="loading">Cargando usuarios...</div>
+<div *ngIf="error">{{ error }}</div>
+<div *ngIf="!loading && !error" class="container">
+  <div class="row justify-content-center g-3">
+    <div *ngFor="let user of users" class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card h-100 shadow-sm user-card" (click)="goToDetail(user)" style="cursor:pointer;">
+        <div class="card-body text-center">
+          <img [src]="user.avatar" width="80" height="80" class="rounded-circle mb-2 border border-2" />
+          <h5 class="card-title mb-1">{{ user.first_name }} {{ user.last_name }}</h5>
+          <p class="card-text mb-1">{{ user.email }}</p>
+          <span class="badge bg-secondary">ID: {{ user.id }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!loading && allUsers.length > perPage" class="d-flex flex-column align-items-center mt-4">
+  <div class="pagination-controls d-flex align-items-center gap-2 flex-wrap mb-3 mt-3">
+    <button (click)="paginaAnterior()" class="btn btn-primary" [disabled]="page === 1">Anterior</button>
+    <span class="mx-2">Página {{ page }} de {{ totalPages }}</span>
+    <button (click)="paginaSiguiente()" class="btn btn-primary" [disabled]="page * perPage >= allUsers.length">Siguiente</button>
+  </div>
+  <button (click)="goToCreate()" class="btn btn-success">Crear nuevo usuario</button>
+</div>
